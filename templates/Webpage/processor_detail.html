@@ -1,0 +1,10 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Processor: {{ processor.model_name }}</h1>
+
+    <p><strong>Brand:</strong> {{ processor.manufacturer }}</p>
+    <p><strong>Base clock:</strong> {{ processor.base_clock }}</p>
+    <p><strong>Turbo clock:</strong> {{ processor.turbo_clock }}</p>
+
+{% endblock %}

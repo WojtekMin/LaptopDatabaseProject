@@ -48,6 +48,7 @@ class StorageDrive(models.Model):
         ('Adata', 'Adata'),
         ('Intel', 'Intel'),
         ('Kingston', 'Kingston'),
+        ('Micron','Micron'),
         ('Samsung', 'Samsung'),
         ('SanDisk', 'SanDisk'),
         ('Seagate', 'Seagate'),
@@ -102,11 +103,11 @@ class Laptop(models.Model):
     weight = models.FloatField(help_text="In kg")
 
     OPERATING_SYSTEM = (
-        ('m', 'MacOS'),
-        ('w', 'Windows 10'),
+        ('MacOS', 'MacOS'),
+        ('Windows 10', 'Windows 10'),
     )
 
-    operating_system = models.CharField(max_length=1, choices=OPERATING_SYSTEM, default='w', blank=False, help_text='Opearating system')
+    operating_system = models.CharField(max_length=10, choices=OPERATING_SYSTEM, default='Windows 10', blank=False, help_text='Opearating system')
     date_of_release = models.DateField()
     processor = models.ForeignKey('Processor', on_delete=models.SET_NULL, null=True)
     graphics_card = models.ManyToManyField(GraphicsCard)
@@ -197,5 +198,5 @@ class Display(models.Model):
         return reverse('storage_drive-detail', args=[str(self.id)])
 
     def __str__(self):
-        return self.size + " inches"
+        return self.size + " inches " + self.resolution + " px"
 
