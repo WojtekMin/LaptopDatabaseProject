@@ -36,3 +36,19 @@ class LaptopDetailView(generic.DetailView):
 
 class ProcessorDetailView(generic.DetailView):
     model = Processor
+
+
+class GraphicsCardDetailView(generic.DetailView):
+    model = GraphicsCard
+
+
+class RamDetailView(generic.DetailView):
+    model = RAM
+
+
+class StorageDriveDetailView(generic.DetailView):
+    model = StorageDrive
+
+
+class DisplayDetailView(generic.DetailView):
+    model = Display

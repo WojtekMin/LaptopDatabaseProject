@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Graphics card: {{ graphicscard.model_name }}</h1>
+
+    <p><strong>Brand:</strong> {{ graphicscard.manufacturer }}</p>
+    <p><strong>Type:</strong> {{ graphicscard.type }}</p>
+    <p><strong>Core base speed:</strong> {{ graphicscard.core_base_speed }}</p>
+    <p><strong>Core turbo speed:</strong> {{ graphicscard.core_turbo_speed }} GHz</p>
+    <p><strong>Memory:</strong> {{ graphicscard.memory }} MB</p>
+    <p><strong>Memory speed:</strong> {{ graphicscard.memory_speed }} MHz</p>
+    <p><strong>Memory bus width:</strong> {{ graphicscard.memory_bus_width }} W</p>
+    <p><strong>Manufacturing technology:</strong> {{ graphicscard.manufacturing_technology }} nm</p>
+
+{% endblock %}

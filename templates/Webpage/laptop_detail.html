@@ -6,10 +6,10 @@
     <p><strong>Brand:</strong> {{ laptop.brand_name }}</p>
     <p><strong>Operating system:</strong> {{ laptop.operating_system }}</p>
     <p><strong>Processor:</strong> <a href="{% url 'processor-detail' laptop.processor.pk %}">{{ laptop.processor }}</a></p> <!-- processor detail link not yet defined -->
-    <p><strong>RAM:</strong> {{ laptop.ram }}</p>
-    <p><strong>Storage drive:</strong> <a href=""> {% for storage_drive in laptop.storage_drive.all %} {{ storage_drive }}{% if not forloop.last %}, {% endif %}{% endfor %}</a></p>
-    <p><strong>Graphics card:</strong> <a href=""> {% for graphics_card in laptop.graphics_card.all %} {{ graphics_card }}{% if not forloop.last %}, {% endif %}{% endfor %}</a></p>
-    <p><strong>Display:</strong> <a href=""> {{ laptop.display }}</a></p>
+    <p><strong>RAM:</strong> <a href="{% url 'ram-detail' laptop.ram.pk %}">{{ laptop.ram }}</a></p>
+    <p><strong>Storage drive:</strong> {% for storage_drive in laptop.storage_drive.all %} <a href="{% url 'storage_drive-detail' storage_drive.pk %}"> {{ storage_drive }}{% if not forloop.last %}, {% endif %}{% endfor %}</a></p>
+    <p><strong>Graphics card:</strong> {% for graphics_card in laptop.graphics_card.all %} <a href="{% url 'graphics_card-detail' graphics_card.pk %}"> {{ graphics_card }}{% if not forloop.last %}, {% endif %}{% endfor %}</a></p>
+    <p><strong>Display:</strong> <a href="{% url 'display-detail' laptop.display.pk %}"> {{ laptop.display }}</a></p>
     <p><strong>Width x Height x Depth:</strong> {{ laptop.width }} cm x {{ laptop.height }} cm x {{ laptop.depth }} cm</p>
     <p><strong>Weight:</strong> {{ laptop.weight }} kg</p>
     <p><strong>Date of release:</strong> {{ laptop.date_of_release }}</p>

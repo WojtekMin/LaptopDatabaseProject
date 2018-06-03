@@ -14,11 +14,11 @@ class GraphicsCard(models.Model):
     manufacturer = models.CharField(max_length=8, choices=MANUFACTURER_TYPE, default='Intel', blank=False, help_text='Manufacturer type')
 
     TYPE = (
-        ('d', 'Discrete'),
-        ('i', 'Integrated'),
+        ('Discrete', 'Discrete'),
+        ('Integrated', 'Integrated'),
     )
 
-    type = models.CharField(max_length=8, choices=TYPE, default='d', blank=False, help_text='Discrete or integrated')
+    type = models.CharField(max_length=12, choices=TYPE, default='d', blank=False, help_text='Discrete or integrated')
     architecture = models.CharField(max_length=100)
     core_base_speed = models.IntegerField(help_text="In MHz")
     core_turbo_speed = models.IntegerField(help_text="In MHz")
@@ -59,8 +59,8 @@ class StorageDrive(models.Model):
     manufacturer = models.CharField(max_length=8, choices=MANUFACTURER_TYPE, default='Samsung', blank=False, help_text='Manufacturer type')
 
     TYPE = (
-        ('hdd', 'HDD'),
-        ('ssd', 'SSD'),
+        ('HDD', 'HDD'),
+        ('SSD', 'SSD'),
     )
 
     type = models.CharField(max_length=8, choices=TYPE, default='d', blank=False, help_text='HDD or SSD')
