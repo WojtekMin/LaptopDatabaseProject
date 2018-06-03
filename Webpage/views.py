@@ -17,12 +17,16 @@ def index(request):
     num_nvidia_graphics_cards = GraphicsCard.objects.filter(manufacturer='Nvidia').count()
     num_graphics_cards = GraphicsCard.objects.count()  # The 'all()' is implied by default.
 
+    # Number of visits to this view, as counted in the session variable.
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+
     # Render the HTML template index.html with the data in the context variable
     return render(
         request,
         'index.html',
         context={'num_laptops': num_laptops, 'num_processors': num_processors,
-                 'num_nvidia_graphics_cards': num_nvidia_graphics_cards, 'num_graphics_cards': num_graphics_cards},
+                 'num_nvidia_graphics_cards': num_nvidia_graphics_cards, 'num_graphics_cards': num_graphics_cards, 'num_visits':num_visits}, # num_visits appended
     )
 
 class LaptopListView(generic.ListView):
