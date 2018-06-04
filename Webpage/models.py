@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.urls import reverse  # Used to generate URLs by reversing the URL patterns
 from django.contrib.auth.models import User
@@ -201,3 +203,31 @@ class Display(models.Model):
     def __str__(self):
         return self.size + " inches " + self.resolution + " px"
 
+
+class LaptopInstance(models.Model):
+    """
+    Model representing a specific copy of a laptop (i.e. that can be liked or added to favourite).
+    """
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4,
+                          help_text="Unique ID for this particular laptop across whole laptop database")
+    laptop = models.ForeignKey('Laptop', on_delete=models.SET_NULL, null=True)
+    description = models.CharField(max_length=200)
+    #due_back = models.DateField(null=True, blank=True)
+
+    LAPTOP_STATUS = (
+        ('f', 'Favourite'),
+        ('d', 'default'),
+        #('a', 'Available'),
+        #('r', 'Reserved'),
+    )
+
+    status = models.CharField(max_length=1, choices=LAPTOP_STATUS, blank=True, default='d', help_text='Laptop status')
+
+    #class Meta:
+     #   ordering = ["due_back"]
+
+    def __str__(self):
+        """
+        String for representing the Model object
+        """
+        return '{0} ({1})'.format(self.id, self.laptop.model_name)
