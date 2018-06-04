@@ -11,4 +11,5 @@ urlpatterns = [
     path('ram/<int:pk>', views.RamDetailView.as_view(), name='ram-detail'),
     path('storage_drive/<int:pk>', views.StorageDriveDetailView.as_view(), name='storage_drive-detail'),
     path('display/<int:pk>', views.DisplayDetailView.as_view(), name='display-detail'),
+    path('likedlaptops/', views.LikedLaptopsByUserListView.as_view(), name='my-liked'),
 ]

@@ -214,14 +214,14 @@ class LaptopInstance(models.Model):
     description = models.CharField(max_length=200)
     #due_back = models.DateField(null=True, blank=True)
 
-    LAPTOP_STATUS = (
-        ('f', 'Favourite'),
-        ('d', 'default'),
-        #('a', 'Available'),
-        #('r', 'Reserved'),
+    STATUS = (
+        ('l', 'Like'),
+        ('d', 'Dislike'),
     )
 
-    status = models.CharField(max_length=1, choices=LAPTOP_STATUS, blank=True, default='d', help_text='Laptop status')
+    status = models.CharField(max_length=8, choices=STATUS, blank=True, help_text='Status')
+
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     #class Meta:
      #   ordering = ["due_back"]

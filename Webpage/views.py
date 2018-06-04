@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
-from .models import Laptop, Processor, GraphicsCard, StorageDrive, RAM, Display
+from .models import Laptop, Processor, GraphicsCard, StorageDrive, RAM, Display, LaptopInstance
 
 
 def index(request):
@@ -28,6 +29,19 @@ def index(request):
         context={'num_laptops': num_laptops, 'num_processors': num_processors,
                  'num_nvidia_graphics_cards': num_nvidia_graphics_cards, 'num_graphics_cards': num_graphics_cards, 'num_visits':num_visits}, # num_visits appended
     )
+
+
+class LikedLaptopsByUserListView(LoginRequiredMixin, generic.ListView):
+    """
+    Generic class-based view listing books on loan to current user.
+    """
+    model = LaptopInstance
+    template_name = 'Webpage/laptopinstance_list_liked_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return LaptopInstance.objects.filter(user=self.request.user).filter(status__exact='l')
+
 
 class LaptopListView(generic.ListView):
     model = Laptop
