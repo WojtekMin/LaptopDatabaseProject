@@ -12,4 +12,7 @@ urlpatterns = [
     path('storage_drive/<int:pk>', views.StorageDriveDetailView.as_view(), name='storage_drive-detail'),
     path('display/<int:pk>', views.DisplayDetailView.as_view(), name='display-detail'),
     path('likedlaptops/', views.LikedLaptopsByUserListView.as_view(), name='my-liked'),
+    path('dislikedlaptops/', views.DislikedLaptopsByUserListView.as_view(), name='my-disliked'),
+    path('alllikedlaptops/', views.AllLikedLaptopsByUsersListView.as_view(), name='all-liked'),
+    path('alldislikedlaptops/', views.AllDislikedLaptopsByUsersListView.as_view(), name='all-disliked'),
 ]

@@ -43,7 +43,7 @@ class DisplayAdmin(admin.ModelAdmin):
 
 @admin.register(LaptopInstance)
 class LaptopInstanceAdmin(admin.ModelAdmin):
-    list_display = ('laptop', 'status', 'user')
+    list_display = ('laptop', 'status', 'person')
     list_filter = ('status',)
 
     fieldsets = (
@@ -51,6 +51,6 @@ class LaptopInstanceAdmin(admin.ModelAdmin):
             'fields': ('laptop', 'description', 'id')
         }),
         ('Status', {
-            'fields': ('status', 'user')
+            'fields': ('status', 'person')
         }),
     )

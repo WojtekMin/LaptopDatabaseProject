@@ -221,10 +221,12 @@ class LaptopInstance(models.Model):
 
     status = models.CharField(max_length=8, choices=STATUS, blank=True, help_text='Status')
 
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    person = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
-    #class Meta:
+    class Meta:
      #   ordering = ["due_back"]
+     permissions = (("can_mark_liked", "Set laptop as liked"), ("can_mark_disliked", "Set laptop as disliked"), ("can_see_all_liked", "See all liked laptops"),
+                    ("can_see_all_disliked", "See all disliked laptops"),)
 
     def __str__(self):
         """

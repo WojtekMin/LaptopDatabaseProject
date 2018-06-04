@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 # Create your views here.
 
@@ -31,16 +32,57 @@ def index(request):
     )
 
 
-class LikedLaptopsByUserListView(LoginRequiredMixin, generic.ListView):
+class LikedLaptopsByUserListView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
     """
-    Generic class-based view listing books on loan to current user.
+    Generic class-based view listing laptops liked to current user.
     """
+    permission_required = 'Webpage.can_mark_liked'
     model = LaptopInstance
     template_name = 'Webpage/laptopinstance_list_liked_user.html'
     paginate_by = 10
 
     def get_queryset(self):
-        return LaptopInstance.objects.filter(user=self.request.user).filter(status__exact='l')
+        return LaptopInstance.objects.filter(person=self.request.user).filter(status__exact='l')
+
+
+class DislikedLaptopsByUserListView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    """
+    Generic class-based view listing laptops disliked to current user.
+    """
+    permission_required = 'Webpage.can_mark_disliked'
+    model = LaptopInstance
+    template_name = 'Webpage/laptopinstance_list_disliked_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return LaptopInstance.objects.filter(person=self.request.user).filter(status__exact='d')
+
+
+
+class AllLikedLaptopsByUsersListView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    """
+    Generic class-based view listing all laptops liked to staff users.
+    """
+    permission_required = 'Webpage.can_see_all_liked'
+    model = LaptopInstance
+    template_name = 'Webpage/laptopinstance_list_all_liked_users.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return LaptopInstance.objects.filter(status__exact='l')
+
+
+class AllDislikedLaptopsByUsersListView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    """
+    Generic class-based view listing all laptops disliked to staff users.
+    """
+    permission_required = 'Webpage.can_see_all_disliked'
+    model = LaptopInstance
+    template_name = 'Webpage/laptopinstance_list_all_disliked_users.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return LaptopInstance.objects.filter(status__exact='d')
 
 
 class LaptopListView(generic.ListView):

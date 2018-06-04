@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Disliked laptops</h1>
+
+    {% if laptopinstance_list %}
+    <ul>
+
+      {% for laptopinst in laptopinstance_list %}
+      <li {% comment %} class="{% if laptopinst.is_overdue %}text-danger{% endif %}"{% endcomment %}>
+        <a href="{% url 'laptop-detail' laptopinst.laptop.pk %}">{{laptopinst.laptop.model_name}}</a> {% comment %} ({{ bookinst.due_back }})  {% endcomment %}
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>There are no laptops disliked.</p>
+    {% endif %}       
+{% endblock %}
