@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Storage drive: {{ storagedrive.model_name }}</h1>
+
+    <p><strong>Brand:</strong> {{ storagedrive.manufacturer }}</p>
+    <p><strong>Type:</strong> {{ storagedrive.type }}</p>
+    <p><strong>Size:</strong> {{ storagedrive.size }} MB</p>
+    <p><strong>Read speed:</strong> {{ storagedrive.read_speed }} MB/s</p>
+    <p><strong>Write speed:</strong> {{ storagedrive.write_speed }} MB/s</p>
+
+{% endblock %}

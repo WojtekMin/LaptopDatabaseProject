@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Processor: {{ processor.model_name }}</h1>
+
+    <p><strong>Brand:</strong> {{ processor.manufacturer }}</p>
+    <p><strong>Cores:</strong> {{ processor.cores }}</p>
+    <p><strong>Threads:</strong> {{ processor.threads }}</p>
+    <p><strong>Base clock:</strong> {{ processor.base_clock }} GHz</p>
+    <p><strong>Turbo clock:</strong> {{ processor.turbo_clock }} GHz</p>
+    <p><strong>L3 cache:</strong> {{ processor.L3_cache }} MB</p>
+    <p><strong>TDP:</strong> {{ processor.TDP }}</p>
+    <p><strong>Manufacturing technology:</strong> {{ processor.manufacturing_technology }} nm</p>
+
+{% endblock %}

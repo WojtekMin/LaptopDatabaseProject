@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>RAM</h1>
+
+    <p><strong>Type:</strong> {{ ram.type }}</p>
+    <p><strong>Size:</strong> {{ ram.size }} MB</p>
+    <p><strong>Frequency:</strong> {{ ram.frequency }} MHz</p>
+    <p><strong>Maximum size:</strong> {{ ram.max_size }} MB</p>
+
+{% endblock %}
