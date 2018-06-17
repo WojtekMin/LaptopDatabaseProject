@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>My Dream Laptops</h1>
+
+    {% if dreamlaptop_list %}
+    <ul>
+
+      {% for dreamlaptop in dreamlaptop_list %}
+      <li>
+        <a href="{{ dreamlaptop.get_absolute_url }}">{{ dreamlaptop.name }}</a>
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>You have no dream laptops.</p>
+    {% endif %}       
+{% endblock %}

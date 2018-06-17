@@ -19,4 +19,6 @@ urlpatterns = [
     path('laptop/create/', views.LaptopCreate.as_view(), name='laptop_create'),
     path('dreamlaptop/<int:pk>', views.DreamLaptopDetailView.as_view(), name='dreamlaptop-detail'),
     path('dreamlaptop/create/', views.DreamLaptopCreate.as_view(), name='dreamlaptop_create'),
+    path('dreamlaptops/', views.UserDreamLaptopListView.as_view(), name='user-dreamlaptops'),
+    path('alldreamlaptops/', views.AllUsersDreamLaptopListView.as_view(), name='all-dreamlaptops'),
 ]

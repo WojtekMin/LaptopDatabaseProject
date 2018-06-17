@@ -158,7 +158,6 @@ class AllFavoritedLaptopsByUsersListView(LoginRequiredMixin, PermissionRequiredM
     paginate_by = 10
 
     def get_queryset(self):
-        #return Laptop.objects.filter(person=self.request.user).filter(status__exact='l')
         return Laptop.objects.filter(favorites__in=Favorite.objects.all())
 
 
@@ -177,3 +176,23 @@ class DreamLaptopCreate(CreateView, PermissionRequiredMixin):
         user = self.request.user
         form.instance.user = user
         return super(DreamLaptopCreate, self).form_valid(form)
+
+
+class UserDreamLaptopListView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = 'Webpage.can_create_dream_laptop'
+    model = DreamLaptop
+    template_name = 'Webpage/dreamlaptop_user_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return DreamLaptop.objects.filter(user=self.request.user)
+
+
+class AllUsersDreamLaptopListView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = 'Webpage.can_see_all_dream_laptops'
+    model = DreamLaptop
+    template_name = 'Webpage/alldreamlaptops_users_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return DreamLaptop.objects.all()

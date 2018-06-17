@@ -33,6 +33,8 @@
               <li><a href="{% url 'all-favorite' %}">All favorited laptops</a></li>
               <li><a href="{% url 'laptop_create' %}">Create new laptop</a></li>
               <li><a href="{% url 'dreamlaptop_create' %}">Create new dream laptop</a></li>
+              <li><a href="{% url 'user-dreamlaptops' %}">My created dream laptops</a></li>
+              <li><a href="{% url 'all-dreamlaptops' %}">All created dream laptops</a></li>
               <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
           {% else %}
               <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
