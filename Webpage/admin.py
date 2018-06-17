@@ -1,11 +1,17 @@
 from django.contrib import admin
-from .models import Laptop, Processor, GraphicsCard, StorageDrive, RAM, Display
+from .models import Laptop, Processor, GraphicsCard, StorageDrive, RAM, Display, Favorite, DreamLaptop
 
 @admin.register(Laptop)
 class LaptopAdmin(admin.ModelAdmin):
     list_display = ('model_name', 'brand_name', 'processor', 'display_graphics_card', 'ram')
     list_filter = ('brand_name', 'processor', 'graphics_card')
-    fields = ['model_name', 'brand_name', ('width', 'height', 'depth'), 'weight', 'processor', 'graphics_card', 'ram', 'storage_drive', 'display', 'operating_system', 'date_of_release', 'user']
+    fields = ['model_name', 'brand_name', ('width', 'height', 'depth'), 'weight', 'processor', 'graphics_card', 'ram', 'storage_drive', 'display', 'operating_system', 'date_of_release']
+
+@admin.register(DreamLaptop)
+class LaptopAdmin(admin.ModelAdmin):
+    list_display = ('name', 'processor', 'display_graphics_card', 'ram')
+    list_filter = ('name', 'processor', 'graphics_card')
+    fields = ['name', 'weight', 'processor', 'graphics_card', 'ram', 'storage_drive', 'display', 'operating_system', 'user', 'description']
 
 @admin.register(Processor)
 class ProcessorAdmin(admin.ModelAdmin):
@@ -36,3 +42,8 @@ class DisplayAdmin(admin.ModelAdmin):
     list_display = ('size', 'resolution', 'type')
     list_filter = ('type', 'size', 'resolution')
     fields = ['type', ('size', 'resolution'), 'refresh_rate']
+
+@admin.register(Favorite)
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ('content_type', 'object_id', 'content_object', 'user', 'cookie')
+    fields = ['content_type', 'object_id', 'content_object', 'user', 'cookie']

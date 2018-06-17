@@ -12,5 +12,11 @@ urlpatterns = [
     path('ram/<int:pk>', views.RamDetailView.as_view(), name='ram-detail'),
     path('storage_drive/<int:pk>', views.StorageDriveDetailView.as_view(), name='storage_drive-detail'),
     path('display/<int:pk>', views.DisplayDetailView.as_view(), name='display-detail'),
-    url(r'^alter/fav/$', views.FavAlterView.as_view(), name='fav-alter'),
+    #url(r'^alter/fav/$', views.FavAlterView.as_view(), name='fav-alter'),
+    path('alter/fav/', views.FavAlterView.as_view(), name='fav-alter'),
+    path('favoritelaptops/', views.FavoritedLaptopsByUserListView.as_view(), name='my-favorite'),
+    path('allfavoritedlaptops/', views.AllFavoritedLaptopsByUsersListView.as_view(), name='all-favorite'),
+    path('laptop/create/', views.LaptopCreate.as_view(), name='laptop_create'),
+    path('dreamlaptop/<int:pk>', views.DreamLaptopDetailView.as_view(), name='dreamlaptop-detail'),
+    path('dreamlaptop/create/', views.DreamLaptopCreate.as_view(), name='dreamlaptop_create'),
 ]

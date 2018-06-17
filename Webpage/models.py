@@ -132,17 +132,11 @@ class Laptop(models.Model):
     ram = models.ForeignKey('RAM', on_delete=models.SET_NULL, null=True)
     display = models.ForeignKey('Display', on_delete=models.SET_NULL, null=True)
 
-    STATUS = (
-        ('l', 'Like'),
-        ('d', 'Dislike'),
-    )
-
-    status = models.CharField(max_length=8, choices=STATUS, blank=True, help_text='Status')
-
-    user = models.ManyToManyField(User)
-
     favorites = GenericRelation(Favorite)
 
+
+    class Meta:
+        permissions = (("can_see_all_favorited", "See all favorited laptops"), ("can_create_laptop", "Create new laptop on the webpage"),)
 
     def display_graphics_card(self):
         return ', '.join([ GraphicsCard.model_name for GraphicsCard in self.graphics_card.all()[:4] ])
@@ -227,4 +221,41 @@ class Display(models.Model):
 
     def __str__(self):
         return self.size + " inches " + self.resolution + " px"
+
+
+class DreamLaptop(models.Model):
+    name = models.CharField(max_length=200)
+    weight = models.FloatField(help_text="In kg")
+
+    OPERATING_SYSTEM = (
+        ('MacOS', 'MacOS'),
+        ('Windows', 'Windows'),
+        ('Linux', 'Linux'),
+    )
+
+    operating_system = models.CharField(max_length=10, choices=OPERATING_SYSTEM, default='Windows', blank=False, help_text='Opearating system')
+    processor = models.ForeignKey('Processor', on_delete=models.SET_NULL, null=True)
+    graphics_card = models.ManyToManyField(GraphicsCard)
+    storage_drive = models.ManyToManyField(StorageDrive)
+    ram = models.ForeignKey('RAM', on_delete=models.SET_NULL, null=True)
+    display = models.ForeignKey('Display', on_delete=models.SET_NULL, null=True)
+
+    description = models.CharField(max_length=200, help_text='Small description for your computer')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+
+    class Meta:
+        permissions = (("can_see_all_dream_laptops", "See all created dream laptops"), ("can_create_dream_laptop", "Create new dream laptop on the webpage"),)
+
+    def display_graphics_card(self):
+        return ', '.join([ GraphicsCard.model_name for GraphicsCard in self.graphics_card.all()[:4] ])
+    display_graphics_card.short_description = 'Graphics card'
+
+
+    def __str__(self):
+        return self.name
+
+
+    def get_absolute_url(self):
+        return reverse('dreamlaptop-detail', args=[str(self.id)])
 

@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 # Create your views here.
 
-from .models import Laptop, Processor, GraphicsCard, StorageDrive, RAM, Display
+from .models import Laptop, Processor, GraphicsCard, StorageDrive, RAM, Display, DreamLaptop
 
 
 def index(request):
@@ -58,6 +62,9 @@ class DisplayDetailView(generic.DetailView):
     model = Display
 
 
+class DreamLaptopDetailView(generic.DetailView):
+    model = DreamLaptop
+
 
 
 from .models import Favorite
@@ -89,28 +96,21 @@ class FavAlterView(FormView):
         try:
             content_type = ContentType.objects.get(app_label=self.request.POST['app_name'], model=self.request.POST['model'].lower())
             model_object = content_type.get_object_for_this_type(id=self.request.POST['model_id'])
-            print('pozdro')
             if fav_value == getattr(settings, 'POSITIVE_NOTATION', 'Favorite'):
                 fav = form.save(commit=False)
                 fav.content_object = model_object
-                print('elo')
                 if self.request.user.is_authenticated:
-                    print('gral')
                     fav.save()
                 else:
-                    print('dupa')
                     if getattr(settings, 'ALLOW_ANONYMOUS', 'TRUE') == "TRUE":
                         fav.cookie = self.request.session.session_key
                         fav.save()
                     else:
-                        print('kupa')
                         return JsonResponse({
                             'success': 0,
                             'error': "You have to sign in "})
-                print('siki')
                 Favorite.objects.get(id=fav.id)
             else:
-                print('piwo')
                 if self.request.user.is_authenticated:
                     Favorite.objects.get(
                         object_id=model_object.id,
@@ -133,3 +133,47 @@ class FavAlterView(FormView):
         return JsonResponse({
             'success': 0,
             'error': form.errors})
+
+
+class FavoritedLaptopsByUserListView(LoginRequiredMixin, generic.ListView):
+    """
+    Generic class-based view listing laptops favorited to current user.
+    """
+    model = Laptop
+    template_name = 'Webpage/laptop_list_favorited_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        #return Laptop.objects.filter(person=self.request.user).filter(status__exact='l')
+        return Laptop.objects.filter(favorites__in=Favorite.objects.filter(user=self.request.user))
+
+
+class AllFavoritedLaptopsByUsersListView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    """
+    Generic class-based view listing laptops favorited to current user.
+    """
+    permission_required = 'Webpage.can_see_all_favorited'
+    model = Laptop
+    template_name = 'Webpage/laptop_list_all_favorited_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        #return Laptop.objects.filter(person=self.request.user).filter(status__exact='l')
+        return Laptop.objects.filter(favorites__in=Favorite.objects.all())
+
+
+class LaptopCreate(CreateView, PermissionRequiredMixin):
+    permission_required = 'Webpage.can_create_laptop'
+    model = Laptop
+    fields = ['model_name', 'brand_name', 'width', 'height', 'depth', 'weight', 'processor', 'graphics_card', 'ram', 'storage_drive', 'display', 'operating_system', 'date_of_release']
+
+
+class DreamLaptopCreate(CreateView, PermissionRequiredMixin):
+    permission_required = 'Webpage.can_create_dream_laptop'
+    model = DreamLaptop
+    fields = ['name', 'weight', 'processor', 'graphics_card', 'ram', 'storage_drive', 'display', 'operating_system', 'description']
+
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.user = user
+        return super(DreamLaptopCreate, self).form_valid(form)

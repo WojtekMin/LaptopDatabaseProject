@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Dream Laptop: {{ dreamlaptop.name }}</h1>
+
+    <p><strong>Operating system:</strong> {{ dreamlaptop.operating_system }}</p>
+    <p><strong>Processor:</strong> <a href="{% url 'processor-detail' dreamlaptop.processor.pk %}">{{ dreamlaptop.processor }}</a></p> <!-- processor detail link not yet defined -->
+    <p><strong>RAM:</strong> <a href="{% url 'ram-detail' dreamlaptop.ram.pk %}">{{ dreamlaptop.ram }}</a></p>
+    <p><strong>Storage drive:</strong> {% for storage_drive in dreamlaptop.storage_drive.all %} <a href="{% url 'storage_drive-detail' storage_drive.pk %}"> {{ storage_drive }}{% if not forloop.last %}, {% endif %}{% endfor %}</a></p>
+    <p><strong>Graphics card:</strong> {% for graphics_card in dreamlaptop.graphics_card.all %} <a href="{% url 'graphics_card-detail' graphics_card.pk %}"> {{ graphics_card }}{% if not forloop.last %}, {% endif %}{% endfor %}</a></p>
+    <p><strong>Display:</strong> <a href="{% url 'display-detail' dreamlaptop.display.pk %}"> {{ dreamlaptop.display }}</a></p>
+    <p><strong>Weight:</strong> {{ dreamlaptop.weight }} kg</p>
+
+    
+{% endblock %}

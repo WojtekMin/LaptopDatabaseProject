@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>My favorite laptops:</h1>
+
+    {% if laptop_list %}
+    <ul>
+
+      {% for laptop in laptop_list %}
+      <li>
+        <a href="{{ laptop.get_absolute_url }}">{{ laptop.model_name }}</a> ({{laptop.brand_name}})
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>You have no favorite laptop.</p>
+    {% endif %}       
+{% endblock %}
