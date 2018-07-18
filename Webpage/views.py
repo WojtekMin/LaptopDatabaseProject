@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
+from django import template
+from django.contrib.auth.models import Group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -196,3 +198,4 @@ class AllUsersDreamLaptopListView(LoginRequiredMixin, PermissionRequiredMixin, g
 
     def get_queryset(self):
         return DreamLaptop.objects.all()
+
